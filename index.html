@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCurrency CONVERTOR</title>
+
+    <style>
+        *{
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body{
+            background-color:rgb(135, 197, 209) ;
+        }
+
+
+        #cont{
+            padding-top: 1%;
+            padding-left: 1%;
+            padding-right: 1%;
+            margin-top: 50px;
+            height: 500px;
+            width: 600px;
+            background-color: rgb(24, 121, 205);
+            color: white;
+        }
+
+        #sub_btn{
+            font-size: 25px;
+        }
+        
+     
+    </style>
+
+    <script>
+        function show(){
+            event.preventDefault();
+          
+            let Dollars_input = document.getElementById("Dollars_input");
+            let ans = document.getElementById("ans");
+            let url = "https://api.exchangerate-api.com/v4/latest/USD";
+    
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                let dollar = data["rates"]["INR"];
+                let amt_in_dlr = parseFloat(Dollars_input.value);
+                let amt_in_rs = amt_in_dlr * dollar;
+                let msg = "Rs " + amt_in_rs.toFixed(2);
+                ans.innerHTML = msg; 
+            })
+            .catch(err => ans.innerHTML = "issue "+ err);
+        }
+    
+        show();
+        setInterval(show, 5000);
+    
+    </script>
+
+
+
+
+</head>
+<body>
+    <center>
+   <div id="cont">
+    <h1 style="font-size: 25px;">LIVE CURRENCY CONVERTOR</h1>
+   
+    <form onsubmit="show()">
+        <input type="number" placeholder="Enter in $" id="Dollars_input" step="any"/>
+      
+    </form>
+    <h1 id="ans"/>
+</div>
+    
+     
+
+      
+
+        
+    </center>
+</body>
+</html>
